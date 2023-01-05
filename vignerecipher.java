@@ -158,6 +158,7 @@ public class vignerecipher extends Applet {
     add(final_lb,gdc);
     gdc.gridx = 2;
     add(final_ta,gdc);
+
     enc.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
                 final_lb.setText("Encrypted Text:");
@@ -198,11 +199,16 @@ public class vignerecipher extends Applet {
             mainstringlowcase = "";
             if( command.equals( "Encrypt" ))  {
                 mainstring = text_ta.getText().toString();
-                key = key_tf.getText().toString();
+                key = key_tf.getText().toString().toLowerCase();
                 mainstringog = mainstring;
                 mainstring = mainstring.toLowerCase();
+                if(key.length() == 0)
+                {
+                    key = "key";
+                }
+
                 if (mainstring.equals("")||!(mainstring.matches("^[a-zA-Z ]*$"))||mainstring == null||
-                        key.equals("")||!(key.matches("^[a-zA-Z]*$"))||key == null){
+                        key.equals("")||!(key.matches("^[a-zA-Z]*$"))||key == null||key.length()<=1){
 //                    Frame f = new Frame();
 //                    f.setLocationRelativeTo(null);
 //                    error_dialog = new Dialog(f,"Error!!",true);
@@ -273,12 +279,13 @@ public class vignerecipher extends Applet {
 
             }
             if(command.equals("Decrypt")){
-            key = key_tf.getText();
+            key = key_tf.getText().toLowerCase();
             ciphertext = text_ta.getText();
             ciphertxt = ciphertext;
+            ciphertext = ciphertext.toLowerCase();
             String a = new String();
                 if (ciphertext.equals("")||!(ciphertext.matches("^[a-zA-Z ]*$"))||ciphertext == null||
-                        key.equals("")||!(key.matches("^[a-zA-Z]*$"))||key == null)
+                        key.equals("")||!(key.matches("^[a-zA-Z]*$"))||key == null||key.length()<=1)
                 {
 //                    Frame f = new Frame();
 //                    f.setLocationRelativeTo(null);
@@ -331,6 +338,7 @@ public class vignerecipher extends Applet {
                     int x = 99;
                     a = "";
                     for (i = 0; i < decryptedtext.length(); i++) {
+                        System.out.println(decryptedtext);
                         x = ciphertxt.charAt(i);
                         if (x <= 90 && x != 32) {
                             a = String.valueOf(decryptedtext.charAt(i));
